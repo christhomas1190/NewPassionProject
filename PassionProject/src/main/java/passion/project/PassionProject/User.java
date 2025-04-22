@@ -26,7 +26,7 @@ public class User {
     @Column(name="EMAIL")
     private String email;
     @Column(name="PASSWORD")
-    private String password;
+    private String pw;
     @Column(name="PROFILEDESCRIPTION")
     private String profileDescription;
     //img url
@@ -42,15 +42,16 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "match_id")
     )
     private List<Matches> matchHistory = new ArrayList<>();
+
     public User(String firstName, String lastName, String userName,
-                String birthDay, String email, String password,
+                String birthDay, String email, String pw,
                 String profileDescription, String profilePicture){
         this.firstName=firstName;
         this.lastName=lastName;
         this.userName=userName;
         this.birthDay = birthDay;
         this.email = email;
-        this.password = password;
+        this.pw = pw;
         this.profileDescription = profileDescription;
         this.profilePicture = profilePicture;
     }
@@ -97,11 +98,11 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.pw = password;
     }
 
     public String getPassword() {
-        return password;
+        return pw;
     }
 
     public void setProfileDescription(String profileDescription) {
