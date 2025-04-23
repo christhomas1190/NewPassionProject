@@ -25,6 +25,10 @@ public class MatchController {
         return matchesRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
+    @PostMapping
+    public Matches createUser(@RequestBody Matches matches) {
+        return matchesRepository.save(matches);
+    }
     @PostMapping("/{id}")
     public Matches updateMatches(@PathVariable Long id, @RequestBody Matches updatedMatches){
         return matchesRepository.findById(id).map(matches->{

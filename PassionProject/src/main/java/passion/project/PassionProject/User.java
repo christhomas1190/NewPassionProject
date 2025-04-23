@@ -15,11 +15,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="USER_ID")
     private Long id;
-    @Column(name="FIRSTNAME")
+    @Column(name="FIRST_NAME")
     private String firstName;
-    @Column(name="LASTNAME")
+    @Column(name="LAST_NAME")
     private String lastName;
-    @Column(name="USERNAME")
+    @Column(name="USER_NAME")
     private String userName;
     @Column(name="BIRTHDAY")
     private String birthDay;
@@ -27,10 +27,10 @@ public class User {
     private String email;
     @Column(name="PASSWORD")
     private String pw;
-    @Column(name="PROFILEDESCRIPTION")
+    @Column(name="PROFILE_DESCRIPTION")
     private String profileDescription;
     //img url
-    @Column(name="PROFILEPICTURE")
+    @Column(name="PROFILE_PICTURE")
     private String profilePicture;
 
     @ManyToMany
@@ -61,7 +61,8 @@ public class User {
         this.profileDescription = profileDescription;
         this.profilePicture = profilePicture;
     }
-
+    public User() {
+    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;

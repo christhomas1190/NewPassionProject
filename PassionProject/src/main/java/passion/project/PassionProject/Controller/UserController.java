@@ -1,6 +1,8 @@
 package passion.project.PassionProject.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import passion.project.PassionProject.Repos.UserRepository;
 import passion.project.PassionProject.User;
@@ -25,6 +27,13 @@ public class UserController {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User savedUser = userRepository.save(user);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
     @PostMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User updatedUser){
         return userRepository.findById(id).map(user->{
@@ -39,6 +48,7 @@ public class UserController {
             return userRepository.save(user);
         }).orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
     }
+
     @DeleteMapping
     public void deleteUser(@PathVariable long id) {
         userRepository.deleteById(id);

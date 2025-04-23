@@ -43,6 +43,9 @@ private Long id;
         this.datePlayed = datePlayed;
         this.coursePlayed = coursePlayed;
     }
+    public Matches(){
+
+    }
     public Long getId() {
         return id;
     }
