@@ -17,7 +17,7 @@ public class MatchController {
         this.matchesRepository=matchesRepository;
     }
     @GetMapping
-    public Iterable<Matches> getAllUsers(){
+    public Iterable<Matches> getAllMatches(){
         return matchesRepository.findAll();
     }
     @GetMapping("{id}")
@@ -37,5 +37,9 @@ public class MatchController {
             matches.setDatePlayed(updatedMatches.getDatePlayed());
             return matchesRepository.save(matches);
         }).orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+    }
+    @DeleteMapping("/{id}")
+    public void deleteMatch(@PathVariable long id) {
+        matchesRepository.deleteById(id);
     }
 }

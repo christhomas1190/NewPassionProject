@@ -1,5 +1,6 @@
 package passion.project.PassionProject;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,11 @@ public class Matches {
 @GeneratedValue(strategy = GenerationType.AUTO)
 @Column(name="MATCH_ID")
 private Long id;
-    @Column(name="MONTH")
+    @Column(name="MATCH_MONTH")
     private String month;
-    @Column(name="DAY")
+    @Column(name="MATCH_DAY")
     private String day;
-    @Column(name="YEAR")
+    @Column(name="MATCH_YEAR")
     private String year;
     @Column(name="MATCHDATE")
     private String matchDate;
@@ -30,6 +31,7 @@ private Long id;
     @Column(name="COURSEPLAYED")
     private String coursePlayed;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "matchHistory")
     private List<User> players = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package passion.project.PassionProject;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.context.annotation.Configuration;
 
@@ -39,7 +40,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "connected_user_id")
     )
     private List<User> usersList = new ArrayList<>();
-
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "user_matches",
