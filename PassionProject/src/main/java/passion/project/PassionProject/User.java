@@ -35,7 +35,7 @@ public class User {
     @Column(name="USERLIST")
     private List<User> usersList = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToOne
     @JoinTable(
             name = "user_matches",
             joinColumns = @JoinColumn(name = "user_id"),

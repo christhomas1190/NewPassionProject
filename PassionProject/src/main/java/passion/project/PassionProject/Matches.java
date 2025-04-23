@@ -28,7 +28,7 @@ private Long id;
     private String datePlayed;
     @Column(name="COURSEPLAYED")
     private String coursePlayed;
-    @ManyToMany
+    @ManyToOne
     @JoinTable(
             name = "match_players",
             joinColumns = @JoinColumn(name = "match_id"),
