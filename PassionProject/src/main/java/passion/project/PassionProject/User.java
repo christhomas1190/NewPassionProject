@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +31,16 @@ public class User {
     //img url
     @Column(name="PROFILEPICTURE")
     private String profilePicture;
-    @Column(name="USERLIST")
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_connections",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "connected_user_id")
+    )
     private List<User> usersList = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToMany
     @JoinTable(
             name = "user_matches",
             joinColumns = @JoinColumn(name = "user_id"),

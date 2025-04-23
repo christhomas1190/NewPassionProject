@@ -2,6 +2,7 @@ package passion.project.PassionProject;
 
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,22 +29,16 @@ private Long id;
     private String datePlayed;
     @Column(name="COURSEPLAYED")
     private String coursePlayed;
-    @ManyToOne
-    @JoinTable(
-            name = "match_players",
-            joinColumns = @JoinColumn(name = "match_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+
+    @ManyToMany(mappedBy = "matchHistory")
     private List<User> players = new ArrayList<>();
-    public Matches() {}
-    
-    public Matches(Long id, String month, String day, String year, String matchDate, String datePlayed, String coursePlayed) {
-        this.id=id;
+
+    public Matches(String month, String day, String year, String matchDate, String datePlayed, String coursePlayed) {
         this.month = month;
         this.day = day;
         this.year = year;
-        this.matchDate = day+"/"+month+"/"+year;
-        this.datePlayed = day+"/"+month+"/"+year;
+        this.matchDate = matchDate;
+        this.datePlayed = datePlayed;
         this.coursePlayed = coursePlayed;
     }
     public Long getId() {
@@ -78,7 +73,7 @@ private Long id;
     }
 
     public String getMatchDate() {
-        return day+"/"+month+"/"+year;
+        return matchDate;
     }
 
     public void setMatchDate(String matchDate) {
@@ -86,7 +81,7 @@ private Long id;
     }
 
     public String getDatePlayed() {
-        return day+"/"+month+"/"+year;
+        return datePlayed;
     }
 
     public void setDatePlayed(String datePlayed) {

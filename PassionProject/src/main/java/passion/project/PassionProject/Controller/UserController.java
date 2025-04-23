@@ -6,12 +6,13 @@ import passion.project.PassionProject.Repos.UserRepository;
 import passion.project.PassionProject.User;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     public UserRepository userRepository;
 
     @Autowired
-    public UserController(){
+    public UserController(UserRepository userRepository){
         this.userRepository=userRepository;
     }
 

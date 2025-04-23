@@ -1,20 +1,19 @@
 package passion.project.PassionProject.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import passion.project.PassionProject.Matches;
 import passion.project.PassionProject.Repos.MatchesRepository;
 import passion.project.PassionProject.User;
 
+@RestController
+@RequestMapping("/matches")
 public class MatchController {
 
     public MatchesRepository matchesRepository;
 
     @Autowired
-    public  MatchController(){
+    public  MatchController(MatchesRepository matchesRepository){
         this.matchesRepository=matchesRepository;
     }
     @GetMapping
