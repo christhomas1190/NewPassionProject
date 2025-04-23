@@ -17,12 +17,12 @@ public class UserControllerTests {
     private UserRepository mockRepo;
     private UserController controller;
 
-    @BeforeEach
-    public void setUp() {
-        mockRepo = mock(UserRepository.class);         // Create a fake UserRepository
-        controller = new UserController();              // Create the controller
-        controller.userRepository = mockRepo;           // Inject the mock repository
-    }
+//    @BeforeEach
+//    public void setUp() {
+//        mockRepo = mock(UserRepository.class);         // Create a fake UserRepository
+//        controller = new UserController();              // Create the controller
+//        controller.userRepository = mockRepo;           // Inject the mock repository
+//    }
 
 //    @Test
 //    public void testGetAllUsers() {

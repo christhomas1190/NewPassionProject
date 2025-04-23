@@ -42,8 +42,8 @@ private Long id;
         this.month = month;
         this.day = day;
         this.year = year;
-        this.matchDate = matchDate;
-        this.datePlayed = datePlayed;
+        this.matchDate = day+"/"+month+"/"+year;
+        this.datePlayed = day+"/"+month+"/"+year;
         this.coursePlayed = coursePlayed;
     }
     public Long getId() {
@@ -78,7 +78,7 @@ private Long id;
     }
 
     public String getMatchDate() {
-        return matchDate;
+        return day+"/"+month+"/"+year;
     }
 
     public void setMatchDate(String matchDate) {
@@ -86,7 +86,7 @@ private Long id;
     }
 
     public String getDatePlayed() {
-        return datePlayed;
+        return day+"/"+month+"/"+year;
     }
 
     public void setDatePlayed(String datePlayed) {
