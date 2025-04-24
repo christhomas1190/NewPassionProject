@@ -1,6 +1,7 @@
 package passion.project.PassionProject;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeId;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,10 @@ private Long id;
     @Column(name="COURSEPLAYED")
     private String coursePlayed;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany(mappedBy = "matchHistory")
-    private List<User> players = new ArrayList<>();
+    private List<User> players;
+
 
     public Matches(String month, String day, String year, String matchDate, String datePlayed, String coursePlayed) {
         this.month = month;

@@ -34,7 +34,7 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User updatedUser){
         return userRepository.findById(id).map(user->{
             user.setFirstName(updatedUser.getFirstName());
@@ -49,7 +49,7 @@ public class UserController {
         }).orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable long id) {
         userRepository.deleteById(id);
     }

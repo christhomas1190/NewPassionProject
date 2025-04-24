@@ -40,7 +40,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "connected_user_id")
     )
     private List<User> usersList = new ArrayList<>();
-    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "user_matches",
