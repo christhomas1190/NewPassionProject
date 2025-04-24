@@ -3,11 +3,13 @@ package passion.project.PassionProject.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import passion.project.PassionProject.Repos.UserRepository;
-import passion.project.PassionProject.User;
+import passion.project.PassionProject.EndPoints.User;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
@@ -22,10 +24,13 @@ public class UserController {
     public Iterable<User> getAllUsers(){
         return userRepository.findAll();
     }
-    @GetMapping("{id}")
-    public User getUserById(@PathVariable Long id){
-        return userRepository.findById(id)
+    @GetMapping("/{id}")
+    public String getGolferById(@PathVariable Long id, Model model) {
+        User golfer = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        model.addAttribute("golfer", golfer);
+        return "golfer-profile";
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

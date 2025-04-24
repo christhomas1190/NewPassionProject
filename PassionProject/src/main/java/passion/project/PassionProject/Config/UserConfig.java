@@ -2,7 +2,7 @@ package passion.project.PassionProject.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import passion.project.PassionProject.User;
+import passion.project.PassionProject.EndPoints.User;
 
 @Configuration
 public class UserConfig {

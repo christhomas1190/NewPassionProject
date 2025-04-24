@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+    <meta charset="UTF-8">
+    <title>Golfer Profile</title>
+
+</head>
+<body>
+<h1>Golfer</h1>
+<div>
+    <img th:src="${golfer.profilePicture}" alt="Picture of the best golfer to ever live" width="200" height="200">
+    <p><b>First Name:</b> <span th:text="${golfer.firstName}"></span></p>
+    <p><b>Last Name:</b> <span th:text="${golfer.lastName}"></span></p>
+    <p><b>Username:</b> <span th:text="${golfer.userName}"></span></p>
+    <p><b>Description:</b> <span th:text="${golfer.profileDescription}"></span></p>
+</div>
+</body>
+</html>

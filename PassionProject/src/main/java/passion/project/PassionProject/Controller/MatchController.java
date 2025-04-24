@@ -2,9 +2,8 @@ package passion.project.PassionProject.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import passion.project.PassionProject.Matches;
+import passion.project.PassionProject.EndPoints.Matches;
 import passion.project.PassionProject.Repos.MatchesRepository;
-import passion.project.PassionProject.User;
 
 @RestController
 @RequestMapping("/matches")

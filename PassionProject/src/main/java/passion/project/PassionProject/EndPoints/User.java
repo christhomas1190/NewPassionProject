@@ -1,8 +1,6 @@
-package passion.project.PassionProject;
+package passion.project.PassionProject.EndPoints;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
