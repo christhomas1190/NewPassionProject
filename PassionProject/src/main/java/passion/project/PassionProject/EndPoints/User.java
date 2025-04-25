@@ -1,6 +1,7 @@
 package passion.project.PassionProject.EndPoints;
 
 import jakarta.persistence.*;
+import passion.project.PassionProject.EndPoints.Matches;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class User {
     @Column(name="EMAIL")
     private String email;
     @Column(name="PASSWORD")
-    private String pw;
+    private String password;
     @Column(name="PROFILE_DESCRIPTION")
     private String profileDescription;
     //img url
@@ -47,14 +48,14 @@ public class User {
     private List<Matches> matchHistory = new ArrayList<>();
 
     public User(String firstName, String lastName, String userName,
-                String birthDay, String email, String pw,
+                String birthDay, String email, String password,
                 String profileDescription, String profilePicture){
         this.firstName=firstName;
         this.lastName=lastName;
         this.userName=userName;
         this.birthDay = birthDay;
         this.email = email;
-        this.pw = pw;
+        this.password = password;
         this.profileDescription = profileDescription;
         this.profilePicture = profilePicture;
     }
@@ -102,11 +103,11 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.pw = password;
+        this.password = password;
     }
 
     public String getPassword() {
-        return pw;
+        return password;
     }
 
     public void setProfileDescription(String profileDescription) {
@@ -133,10 +134,7 @@ public class User {
 
     public void setMatchHistory(List<Matches> matchHistory) {this.matchHistory = matchHistory;}
 
-    public List<User> getUsersList() {return usersList;}
+   public List<User> getUsersList() {return usersList;}
 
     public void setUsersList(List<User> usersList) {this.usersList = usersList;}
-
-
-
 }

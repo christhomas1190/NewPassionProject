@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Golfers</title>
+</head>
+<body>
+
+<h1>All Golfers</h1>
+
+<div th:each="golfer : ${golfers}">
+    <img th:src="${golfer.profilePicture}" alt="Golfer Profile Picture" width="200" height="200"><br>
+    <p><b>First Name:</b> <span th:text="${golfer.firstName}"></span></p>
+    <p><b>Last Name:</b> <span th:text="${golfer.lastName}"></span></p>
+    <p><b>Username:</b> <span th:text="${golfer.userName}"></span></p>
+    <p><b>Description:</b> <span th:text="${golfer.profileDescription}"></span></p>
+    <hr>
+</div>
+</body>
+</html>
