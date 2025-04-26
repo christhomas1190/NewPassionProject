@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile picture</title>
+</head>
+<body>
+    <form action= "/user/pfp" method="post" enctype="multipart/form-data">
+        <label for= "profilePicture">Profile Picture:</label><br>
+        <input type="file" id="profilePicture" name="profilePicture" accept="image/*" required><br><br>
+        <button type="submit">Upload Picture</button>
+    </form>
+</body>
+</html>

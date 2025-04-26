@@ -84,24 +84,8 @@ public class UserController {
                            @RequestParam("email") String email,
                            @RequestParam("password") String password,
                            @RequestParam("profileDescription") String profileDescription,
-                           @RequestParam(value = "profilePicture", required = false) MultipartFile file) throws IOException {
+                           @RequestParam(value = "profilePicture", required = false) String profilePicturePath){
 
-        //  default picture path or uploaded picture path
-        String profilePicturePath = null;
-
-        // Check if a file was uploaded
-        if (file != null && !file.isEmpty()) {
-            Path uploadPath = Paths.get("src/main/resources/static/uploads");
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath); // Create uploads folder if missing
-            }
-
-            String fileName = file.getOriginalFilename();
-            Path filePath = uploadPath.resolve(fileName);
-            Files.write(filePath, file.getBytes());
-
-            profilePicturePath = "/uploads/" + fileName;
-        }
 
         // Create new user with profile picture path (null if no picture uploaded)
         User newUser = new User(firstName, lastName, userName, birthDay, email, password, profileDescription, profilePicturePath);
@@ -109,9 +93,32 @@ public class UserController {
         // Save the user into database
         userRepository.save(newUser);
 
-        // Redirect back to golfer list page
+        // Redirect back to golfer pfp upload page
+        return "redirect:/user/pfp";
+    }
+    @GetMapping("/pfp")
+    public String showPfpPage(){
+        return "/pfp";
+    }
+    @PostMapping("/pfp")
+    @ResponseBody
+    public String uploadProfilePicture(@RequestParam("file") MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            return "redirect:/user/pfp";
+        }
+
+        Path uploadPath = Paths.get("src/main/resources/static/uploads");
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        String fileName = file.getOriginalFilename();
+        Path filePath = uploadPath.resolve(fileName);
+        Files.write(filePath, file.getBytes());
+
         return "redirect:/user/list";
     }
+
 
     @DeleteMapping("/{id}")
     @ResponseBody
