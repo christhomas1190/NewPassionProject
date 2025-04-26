@@ -41,7 +41,6 @@ public class UserController {
     public String showInputPage() {
         return "input";
     }
-
     @GetMapping("/{id}")
     public String getGolferById(@PathVariable Long id, Model model) {
         User golfer = userRepository.findById(id)
@@ -56,27 +55,6 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User savedUser = userRepository.save(user);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-    }
-    @PostMapping("/save")
-    public String saveUser(@RequestParam("firstName") String firstName,
-                           @RequestParam("lastName") String lastName,
-                           @RequestParam("userName") String userName,
-                           @RequestParam("birthDay") String birthDay,
-                           @RequestParam("email") String email,
-                           @RequestParam("password") String password,
-                           @RequestParam("profileDescription") String profileDescription,
-                           @RequestParam("profilePicture") MultipartFile file) throws IOException {
-
-        // Save uploaded profile picture
-        String fileName = file.getOriginalFilename();
-        Path uploadPath = Paths.get("src/main/resources/static/uploads/" + fileName);
-        Files.write(uploadPath, file.getBytes());
-
-        // Save user to database
-        User newUser = new User(firstName, lastName, userName, birthDay, email, password, profileDescription, "/uploads/" + fileName);
-        userRepository.save(newUser);
-
-        return "redirect:/user/list"; // After saving, go back to show all golfers
     }
 
     @PutMapping("/{id}")
@@ -98,7 +76,42 @@ public class UserController {
             return userRepository.save(user);
         }).orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
     }
+    @PostMapping("/save")
+    public String saveUser(@RequestParam("firstName") String firstName,
+                           @RequestParam("lastName") String lastName,
+                           @RequestParam("userName") String userName,
+                           @RequestParam("birthDay") String birthDay,
+                           @RequestParam("email") String email,
+                           @RequestParam("password") String password,
+                           @RequestParam("profileDescription") String profileDescription,
+                           @RequestParam(value = "profilePicture", required = false) MultipartFile file) throws IOException {
 
+        //  default picture path or uploaded picture path
+        String profilePicturePath = null;
+
+        // Check if a file was uploaded
+        if (file != null && !file.isEmpty()) {
+            Path uploadPath = Paths.get("src/main/resources/static/uploads");
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath); // Create uploads folder if missing
+            }
+
+            String fileName = file.getOriginalFilename();
+            Path filePath = uploadPath.resolve(fileName);
+            Files.write(filePath, file.getBytes());
+
+            profilePicturePath = "/uploads/" + fileName;
+        }
+
+        // Create new user with profile picture path (null if no picture uploaded)
+        User newUser = new User(firstName, lastName, userName, birthDay, email, password, profileDescription, profilePicturePath);
+
+        // Save the user into database
+        userRepository.save(newUser);
+
+        // Redirect back to golfer list page
+        return "redirect:/user/list";
+    }
 
     @DeleteMapping("/{id}")
     @ResponseBody

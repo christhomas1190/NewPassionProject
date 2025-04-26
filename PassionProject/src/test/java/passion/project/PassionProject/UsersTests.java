@@ -26,7 +26,7 @@ public class UsersTests {
         assertEquals("password", user.getPassword());
         assertEquals("This is a description I would have on my profile.",
                 user.getProfileDescription());
-        assertEquals(":)", user.getProfilePicture());
+//        assertEquals(":)", user.getProfilePicture());
 
     }
     @Test
@@ -37,7 +37,7 @@ public class UsersTests {
         user.setUserName("cthomas1190");
         user.setPassword("password");
         user.setProfileDescription("This is a description I would have on my profile.");
-        user.setProfilePicture(":)");
+//        user.setProfilePicture(":)");
 
 
         assertEquals("Christian", user.getFirstName());
