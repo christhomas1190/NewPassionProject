@@ -100,6 +100,7 @@ public class UserController {
     public String showPfpPage(){
         return "/pfp";
     }
+
     @PostMapping("/pfp")
     public String uploadProfilePicture(@RequestParam("profilePicture") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
