@@ -12,6 +12,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //basic user info
     @Column(name="USER_ID")
     private Long id;
     @Column(name="FIRST_NAME")
@@ -31,7 +32,7 @@ public class User {
     //img url
     @Column(name="PROFILE_PICTURE")
     private String profilePicture;
-
+    //list of users connected too
     @ManyToMany
     @JoinTable(
             name = "user_connections",
@@ -39,6 +40,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "connected_user_id")
     )
     private List<User> usersList = new ArrayList<>();
+    //list of matches
     @ManyToMany
     @JoinTable(
             name = "user_matches",

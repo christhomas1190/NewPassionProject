@@ -36,7 +36,8 @@ public class UserController {
     @GetMapping("/list")
     public String getAllGolfers(Model model) {
         Iterable<User> allGolfers = userRepository.findAll();
-        // DEBUGGING OUTPUT — this will print every golfer and their picture path to the console
+        // DEBUGGING
+        // — this will print every golfer and their picture path to the console
         for (User u : allGolfers) {
             System.out.println("User: " + u.getFirstName() + ", Profile Picture: " + u.getProfilePicture());
         }
@@ -74,6 +75,8 @@ public class UserController {
             user.setEmail(updatedUser.getEmail());
             user.setProfileDescription(updatedUser.getProfileDescription());
             user.setProfilePicture(updatedUser.getProfilePicture());
+
+            // check if profile picture is missing
             if (updatedUser.getProfilePicture() != null && !updatedUser.getProfilePicture().isEmpty()) {
                 user.setProfilePicture(updatedUser.getProfilePicture());
             }else{
@@ -83,6 +86,8 @@ public class UserController {
         }).orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
     }
     @PostMapping("/save")
+    //@requestbody asks for json
+    //requestparams is looking for specific field from html
     public String saveUser(@RequestParam("firstName") String firstName,
                            @RequestParam("lastName") String lastName,
                            @RequestParam("userName") String userName,
@@ -130,7 +135,7 @@ public class UserController {
     }
     @GetMapping("/pfp")
     public String showPfpPage(@RequestParam("userId")Long userId,Model model){
-        model.addAttribute("userId",userId);
+        model.addAttribute("userId",userId);// add the userId to the model
         return "pfp";
     }
 
