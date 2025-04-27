@@ -101,8 +101,7 @@ public class UserController {
         return "/pfp";
     }
     @PostMapping("/pfp")
-    @ResponseBody
-    public String uploadProfilePicture(@RequestParam("file") MultipartFile file) throws IOException {
+    public String uploadProfilePicture(@RequestParam("profilePicture") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             return "redirect:/user/pfp";
         }
