@@ -31,9 +31,15 @@ public class UserController {
     public Iterable<User> getAllUsers(){
         return userRepository.findAll();
     }
+
+
     @GetMapping("/list")
     public String getAllGolfers(Model model) {
         Iterable<User> allGolfers = userRepository.findAll();
+        // DEBUGGING OUTPUT — this will print every golfer and their picture path to the console
+        for (User u : allGolfers) {
+            System.out.println("User: " + u.getFirstName() + ", Profile Picture: " + u.getProfilePicture());
+        }
         model.addAttribute("golfers", allGolfers);
         return "golfer-list";
     }
@@ -89,24 +95,21 @@ public class UserController {
 
         // Create new user with profile picture path (null if no picture uploaded)
         User newUser = new User(firstName, lastName, userName, birthDay, email, password, profileDescription, profilePicturePath);
-
-        // Save the user into database
+        User savedUser = userRepository.save(newUser);// Save the user into database
         userRepository.save(newUser);
 
         // Redirect back to golfer pfp upload page
-        return "redirect:/user/pfp";
-    }
-    @GetMapping("/pfp")
-    public String showPfpPage(){
-        return "/pfp";
+        return "redirect:/user/pfp?userId=" +savedUser.getId();
     }
 
     @PostMapping("/pfp")
-    public String uploadProfilePicture(@RequestParam("profilePicture") MultipartFile file) throws IOException {
+    public String uploadProfilePicture(@RequestParam("profilePicture") MultipartFile file,
+                                       @RequestParam("userId") Long userId) throws IOException {
         if (file.isEmpty()) {
-            return "redirect:/user/pfp";
+            return "redirect:/user/pfp"; // If no file, stay on upload page
         }
 
+        // Save the file
         Path uploadPath = Paths.get("src/main/resources/static/uploads");
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
@@ -116,9 +119,20 @@ public class UserController {
         Path filePath = uploadPath.resolve(fileName);
         Files.write(filePath, file.getBytes());
 
-        return "redirect:/user/list";
-    }
+        // Update the user with profile picture path
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found when uploading picture"));
 
+        user.setProfilePicture("/uploads/" + fileName);
+        userRepository.save(user);
+
+        return "redirect:/user/list"; // Now go to golfer list
+    }
+    @GetMapping("/pfp")
+    public String showPfpPage(@RequestParam("userId")Long userId,Model model){
+        model.addAttribute("userId",userId);
+        return "pfp";
+    }
 
     @DeleteMapping("/{id}")
     @ResponseBody
