@@ -9,7 +9,8 @@
 <body>
 
 <h1>All Golfers</h1>
-
+<!--  loops through each golfer-->
+<!--loop comes from thymeleaf-->
 <div th:each="golfer : ${golfers}">
     <img th:src="@{${golfer.profilePicture}}" alt="Golfer Profile Picture" width="200" height="200"><br>
     <p><b>First Name:</b> <span th:text="${golfer.firstName}"></span></p>

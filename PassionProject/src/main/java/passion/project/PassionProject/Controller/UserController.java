@@ -115,7 +115,7 @@ public class UserController {
         }
 
         // Save the file
-        Path uploadPath = Paths.get("target/main/resources/static/uploads");
+        Path uploadPath = Paths.get("src/main/resources/static/uploads");
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
