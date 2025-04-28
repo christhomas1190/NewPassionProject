@@ -115,7 +115,7 @@ public class UserController {
         }
 
         // Save the file
-        Path uploadPath = Paths.get("src/main/resources/static/uploads");
+        Path uploadPath = Paths.get("WebUploads");
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
@@ -128,7 +128,7 @@ public class UserController {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found when uploading picture"));
 
-        user.setProfilePicture("/uploads/" + fileName);
+        user.setProfilePicture("/WebUploads/" + fileName);
         userRepository.save(user);
 
         return "redirect:/user/list"; // Now go to golfer list
