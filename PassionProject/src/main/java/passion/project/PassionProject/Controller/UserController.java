@@ -28,6 +28,7 @@ public class UserController {
 
     @GetMapping
     @ResponseBody
+    //this is what was returning the json to the webpage
     public Iterable<User> getAllUsers(){
         return userRepository.findAll();
     }
