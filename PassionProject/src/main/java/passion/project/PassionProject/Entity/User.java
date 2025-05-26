@@ -42,7 +42,7 @@ public class User {
     @Column(name="PROFILE_PICTURE")
     private String profilePicture;
     //list of users connected too
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_connections",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -50,7 +50,7 @@ public class User {
     )
     private List<User> usersList = new ArrayList<>();
     //list of matches
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_matches",
             joinColumns = @JoinColumn(name = "user_id"),

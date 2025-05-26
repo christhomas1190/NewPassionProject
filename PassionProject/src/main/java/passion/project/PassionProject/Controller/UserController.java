@@ -1,5 +1,6 @@
 package passion.project.PassionProject.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -102,7 +104,6 @@ public class UserController {
         // Create new user with profile picture path (null if no picture uploaded)
         User newUser = new User(firstName, lastName, userName, birthDay, email, password, profileDescription, profilePicturePath);
         User savedUser = userRepository.save(newUser);// Save the user into database
-        userRepository.save(newUser);
 
         // Redirect back to golfer pfp upload page
         return "redirect:/user/pfp?userId=" +savedUser.getId();
@@ -110,34 +111,71 @@ public class UserController {
 
     @PostMapping("/pfp")
     public String uploadProfilePicture(@RequestParam("profilePicture") MultipartFile file,
-                                       @RequestParam("userId") Long userId) throws IOException {
+                                       @RequestParam("userId") Long userId,
+                                       HttpSession session) throws IOException {
+
+        System.out.println("Upload attempt: file name = " + file.getOriginalFilename() + ", size = " + file.getSize());
+
         if (file.isEmpty()) {
-            return "redirect:/user/pfp"; // If no file, stay on upload page
+            System.out.println("Upload failed: file was empty.");
+            return "redirect:/user/pfp?userId=" + userId;
         }
 
-        // Save the file
         Path uploadPath = Paths.get("WebUploads");
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
+            System.out.println("Created upload directory at: " + uploadPath.toAbsolutePath());
         }
 
         String fileName = file.getOriginalFilename();
         Path filePath = uploadPath.resolve(fileName);
         Files.write(filePath, file.getBytes());
 
-        // Update the user with profile picture path
+        System.out.println("Uploaded file saved to: " + filePath.toAbsolutePath());
+
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found when uploading picture"));
 
         user.setProfilePicture("/WebUploads/" + fileName);
         userRepository.save(user);
 
-        return "redirect:/user/list"; // Now go to golfer list
+        System.out.println("User " + user.getUserName() + " profile picture updated to: /WebUploads/" + fileName);
+
+        session.setAttribute("userId", userId);
+
+        return "redirect:/user/preferences";
     }
+
+
     @GetMapping("/pfp")
     public String showPfpPage(@RequestParam("userId")Long userId,Model model){
         model.addAttribute("userId",userId);// add the userId to the model
         return "pfp";
+    }
+    @GetMapping("/preferences")
+    public String showPreferencesForm() {
+        return "preferences";
+    }
+    @PostMapping("/preferences")
+    public String savePreferences(
+            @RequestParam("musicGenre") String musicGenre,
+            @RequestParam("drinksAlcohol") String drinksAlcohol,
+            @RequestParam("gambles") String gambles,
+            @RequestParam("handicap") Integer handicap,
+            @RequestParam("intensity") String intensity,
+            HttpSession session) {
+        Long userId = (Long) session.getAttribute("userId");
+        Optional<User> optionalUser =userRepository.findById(userId);
+        if(optionalUser.isPresent()){
+            User user=optionalUser.get();
+            user.setMusicGenre(musicGenre);
+            user.setDrinksAlcohol(drinksAlcohol);
+            user.setGambles(gambles);
+            user.setHandicap(handicap);
+            user.setIntensity(intensity);
+            userRepository.save(user);
+        }
+        return "redirect:/user/" + userId;
     }
 
     @DeleteMapping("/{id}")
