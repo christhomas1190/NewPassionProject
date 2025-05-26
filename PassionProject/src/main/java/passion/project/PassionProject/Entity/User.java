@@ -1,7 +1,6 @@
-package passion.project.PassionProject.EndPoints;
+package passion.project.PassionProject.Entity;
 
 import jakarta.persistence.*;
-import passion.project.PassionProject.EndPoints.Matches;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +28,16 @@ public class User {
     private String password;
     @Column(name="PROFILE_DESCRIPTION")
     private String profileDescription;
+    @Column(name = "music_genre")
+    private String musicGenre;
+    @Column(name = "drinks_alcohol")
+    private String drinksAlcohol;
+    @Column(name = "gambles")
+    private String gambles;
+    @Column(name = "golf_handicap")
+    private Integer handicap;
+    @Column(name = "play_intensity")
+    private String intensity;
     //img url
     @Column(name="PROFILE_PICTURE")
     private String profilePicture;
@@ -138,5 +147,34 @@ public class User {
 
    public List<User> getUsersList() {return usersList;}
 
-    public void setUsersList(List<User> usersList) {this.usersList = usersList;}
+    public void setUsersList(List<User> usersList) {this.usersList = usersList;}public String getMusicGenre() {
+        return musicGenre;
+    }
+    public void setMusicGenre(String musicGenre) {
+        this.musicGenre = musicGenre;
+    }
+    public String getDrinksAlcohol() {
+        return drinksAlcohol;
+    }
+    public void setDrinksAlcohol(String drinksAlcohol) {
+        this.drinksAlcohol = drinksAlcohol;
+    }
+    public String getGambles() {
+        return gambles;
+    }
+    public void setGambles(String gambles) {
+        this.gambles = gambles;
+    }
+    public Integer getHandicap() {
+        return handicap;
+    }
+    public void setHandicap(Integer handicap) {
+        this.handicap = handicap;
+    }
+    public String getIntensity() {
+        return intensity;
+    }
+    public void setIntensity(String intensity) {
+        this.intensity = intensity;
+    }
 }

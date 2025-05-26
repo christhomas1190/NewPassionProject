@@ -1,4 +1,4 @@
-package passion.project.PassionProject.EndPoints;
+package passion.project.PassionProject.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

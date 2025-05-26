@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import passion.project.PassionProject.Repos.UserRepository;
-import passion.project.PassionProject.EndPoints.User;
+import passion.project.PassionProject.Entity.User;
 
 import java.io.IOException;
 import java.nio.file.Files;

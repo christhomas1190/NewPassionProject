@@ -3,7 +3,7 @@ package passion.project.PassionProject.ControllerTests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import passion.project.PassionProject.Controller.MatchController;
-import passion.project.PassionProject.EndPoints.Matches;
+import passion.project.PassionProject.Entity.Matches;
 import passion.project.PassionProject.Repos.MatchesRepository;
 
 import java.util.List;

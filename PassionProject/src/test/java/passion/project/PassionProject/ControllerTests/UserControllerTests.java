@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import passion.project.PassionProject.Controller.UserController;
 import passion.project.PassionProject.Repos.UserRepository;
-import passion.project.PassionProject.EndPoints.User;
+import passion.project.PassionProject.Entity.User;
 
 import java.util.*;
 

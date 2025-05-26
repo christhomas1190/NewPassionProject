@@ -2,7 +2,7 @@ package passion.project.PassionProject;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import passion.project.PassionProject.EndPoints.Matches;
+import passion.project.PassionProject.Entity.Matches;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

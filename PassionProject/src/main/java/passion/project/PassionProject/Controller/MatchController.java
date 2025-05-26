@@ -2,7 +2,7 @@ package passion.project.PassionProject.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import passion.project.PassionProject.EndPoints.Matches;
+import passion.project.PassionProject.Entity.Matches;
 import passion.project.PassionProject.Repos.MatchesRepository;
 
 @RestController
