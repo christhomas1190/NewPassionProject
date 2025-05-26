@@ -9,8 +9,16 @@
 <h2>Tell Us About Your Golf Preferences</h2>
 
 <form action="/user/preferences" method="post">
-    <label for="musicGenre">Favorite Music Genre While Golfing:</label><br>
-    <input type="text" id="musicGenre" name="musicGenre" placeholder="e.g. Jazz, Rock, Country"><br><br>
+    <label>Favorite Music Genres While Golfing (select all that apply):</label><br>
+    <div>
+        <label><input type="checkbox" name="musicGenres" value="Rock"> Rock</label><br>
+        <label><input type="checkbox" name="musicGenres" value="Hip-Hop"> Hip-Hop</label><br>
+        <label><input type="checkbox" name="musicGenres" value="Jazz"> Jazz</label><br>
+        <label><input type="checkbox" name="musicGenres" value="Country"> Country</label><br>
+        <label><input type="checkbox" name="musicGenres" value="Pop"> Pop</label><br>
+        <label><input type="checkbox" name="musicGenres" value="Electronic"> Electronic</label><br>
+        <label><input type="checkbox" name="musicGenres" value="No Music"> No Music</label><br>
+    </div><br>
 
     <label>Do you drink alcohol while golfing?</label><br>
     <input type="radio" name="drinksAlcohol" value="Yes"> Yes<br>
