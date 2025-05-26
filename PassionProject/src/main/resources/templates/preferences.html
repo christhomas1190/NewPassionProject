@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Golf Preferences</title>
+    <link rel="stylesheet" th:href="@{/css/koley.css}">
+</head>
+<body>
+<h2>Tell Us About Your Golf Preferences</h2>
+
+<form action="/user/preferences" method="post">
+    <label for="musicGenre">Favorite Music Genre While Golfing:</label><br>
+    <input type="text" id="musicGenre" name="musicGenre" placeholder="e.g. Jazz, Rock, Country"><br><br>
+
+    <label>Do you drink alcohol while golfing?</label><br>
+    <input type="radio" name="drinksAlcohol" value="Yes"> Yes<br>
+    <input type="radio" name="drinksAlcohol" value="No"> No<br><br>
+
+    <label>Do you gamble on your games?</label><br>
+    <input type="radio" name="gambles" value="Yes"> Yes<br>
+    <input type="radio" name="gambles" value="No"> No<br><br>
+
+    <label for="handicap">Your Handicap:</label><br>
+    <input type="number" id="handicap" name="handicap" min="0" max="36"><br><br>
+
+    <label>Intensity of Play:</label><br>
+    <select name="intensity">
+        <option value="Casual">Casual</option>
+        <option value="Competitive">Competitive</option>
+        <option value="Intermediate">Intermediate</option>
+    </select><br><br>
+
+    <button type="submit">Save Preferences</button>
+</form>
+</body>
+</html>
