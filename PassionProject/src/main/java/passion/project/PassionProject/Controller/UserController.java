@@ -169,7 +169,7 @@ public class UserController {
         Long userId = (Long) session.getAttribute("userId");
         User user = userRepository.findById(userId).orElseThrow();
 
-        user.setMusicGenre(String.join(", ", musicGenres)); // or however your field is structured
+        user.setMusicGenres(String.join(", ", musicGenres));
         user.setDrinksAlcohol(drinksAlcohol);
         user.setGambles(gambles);
         user.setIntensity(intensity);
@@ -192,7 +192,7 @@ public class UserController {
     }
     @PostMapping("/preferences")
     public String savePreferences(
-            @RequestParam("musicGenre") String musicGenre,
+            @RequestParam("musicGenres") String musicGenres,
             @RequestParam("drinksAlcohol") String drinksAlcohol,
             @RequestParam("gambles") String gambles,
             @RequestParam("handicap") Integer handicap,
@@ -202,7 +202,7 @@ public class UserController {
         Optional<User> optionalUser =userRepository.findById(userId);
         if(optionalUser.isPresent()){
             User user=optionalUser.get();
-            user.setMusicGenre(musicGenre);
+            user.setMusicGenres(musicGenres);
             user.setDrinksAlcohol(drinksAlcohol);
             user.setGambles(gambles);
             user.setHandicap(handicap);

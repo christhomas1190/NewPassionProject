@@ -29,7 +29,7 @@ public class User {
     @Column(name="PROFILE_DESCRIPTION")
     private String profileDescription;
     @Column(name = "music_genre")
-    private String musicGenre;
+    private String musicGenres;
     @Column(name = "drinks_alcohol")
     private String drinksAlcohol;
     @Column(name = "gambles")
@@ -44,7 +44,7 @@ public class User {
 
     public User(String firstName, String lastName, String userName, String birthDay,
                 String email, String password, String profileDescription, String profilePicture,
-                String musicGenre, String drinksAlcohol, String gambles, Integer handicap, String intensity) {
+                String musicGenres, String drinksAlcohol, String gambles, Integer handicap, String intensity) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
@@ -53,7 +53,7 @@ public class User {
         this.password = password;
         this.profileDescription = profileDescription;
         this.profilePicture = profilePicture;
-        this.musicGenre = musicGenre;
+        this.musicGenres = musicGenres;
         this.drinksAlcohol = drinksAlcohol;
         this.gambles = gambles;
         this.handicap = handicap;
@@ -168,11 +168,11 @@ public class User {
 
     public void setUsersList(List<User> usersList) {this.usersList = usersList;}
 
-    public String getMusicGenre() {
-        return musicGenre;
+    public String getMusicGenres() {
+        return musicGenres;
     }
-    public void setMusicGenre(String musicGenre) {
-        this.musicGenre = musicGenre;
+    public void setMusicGenres(String musicGenres) {
+        this.musicGenres = musicGenres;
     }
     public String getDrinksAlcohol() {
         return drinksAlcohol;
