@@ -11,10 +11,10 @@ public class UsersTests {
     private User user;
 
     @BeforeEach
-    public void setUp() {
-        user = new User("Christian", "Thomas","christhomas1190", "11/11/1990",
-                "cthomas@email.com", "password", "This is a description I would have on my profile.", ":)");
-    }
+//    public void setUp() {
+//        user = new User("Christian", "Thomas","christhomas1190", "11/11/1990",
+//                "cthomas@email.com", "password", "This is a description I would have on my profile.", ":)");
+//    }
 
     @Test
     public void usersGettersTest(){

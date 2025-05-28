@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -102,7 +103,18 @@ public class UserController {
 
 
         // Create new user with profile picture path (null if no picture uploaded)
-        User newUser = new User(firstName, lastName, userName, birthDay, email, password, profileDescription, profilePicturePath);
+        User newUser = new User(
+                firstName,
+                lastName,
+                userName,
+                birthDay,
+                email,
+                password,
+                profileDescription,
+                profilePicturePath,
+                "", "", "", null, "" // empty/default preference values for now
+        );
+
         User savedUser = userRepository.save(newUser);// Save the user into database
 
         // Redirect back to golfer pfp upload page
@@ -144,6 +156,28 @@ public class UserController {
         session.setAttribute("userId", userId);
 
         return "redirect:/user/preferences";
+    }
+    @PostMapping("user/preferences")
+    public String savePreferences(
+            @RequestParam List<String> musicGenres,
+            @RequestParam String drinksAlcohol,
+            @RequestParam String gambles,
+            @RequestParam String intensity,
+            @RequestParam double handicap,
+            HttpSession session) {
+
+        Long userId = (Long) session.getAttribute("userId");
+        User user = userRepository.findById(userId).orElseThrow();
+
+        user.setMusicGenre(String.join(", ", musicGenres)); // or however your field is structured
+        user.setDrinksAlcohol(drinksAlcohol);
+        user.setGambles(gambles);
+        user.setIntensity(intensity);
+        user.setHandicap((int) handicap);
+
+        userRepository.save(user);
+
+        return "redirect:/user/profile";
     }
 
 

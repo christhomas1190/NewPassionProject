@@ -41,6 +41,25 @@ public class User {
     //img url
     @Column(name="PROFILE_PICTURE")
     private String profilePicture;
+
+    public User(String firstName, String lastName, String userName, String birthDay,
+                String email, String password, String profileDescription, String profilePicture,
+                String musicGenre, String drinksAlcohol, String gambles, Integer handicap, String intensity) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.birthDay = birthDay;
+        this.email = email;
+        this.password = password;
+        this.profileDescription = profileDescription;
+        this.profilePicture = profilePicture;
+        this.musicGenre = musicGenre;
+        this.drinksAlcohol = drinksAlcohol;
+        this.gambles = gambles;
+        this.handicap = handicap;
+        this.intensity = intensity;
+    }
+
     //list of users connected too
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -58,18 +77,18 @@ public class User {
     )
     private List<Matches> matchHistory = new ArrayList<>();
 
-    public User(String firstName, String lastName, String userName,
-                String birthDay, String email, String password,
-                String profileDescription, String profilePicture){
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.userName=userName;
-        this.birthDay = birthDay;
-        this.email = email;
-        this.password = password;
-        this.profileDescription = profileDescription;
-        this.profilePicture = profilePicture;
-    }
+//    public User(String firstName, String lastName, String userName,
+//                String birthDay, String email, String password,
+//                String profileDescription, String profilePicture){
+//        this.firstName=firstName;
+//        this.lastName=lastName;
+//        this.userName=userName;
+//        this.birthDay = birthDay;
+//        this.email = email;
+//        this.password = password;
+//        this.profileDescription = profileDescription;
+//        this.profilePicture = profilePicture;
+//    }
     public User() {
     }
 
@@ -147,7 +166,9 @@ public class User {
 
    public List<User> getUsersList() {return usersList;}
 
-    public void setUsersList(List<User> usersList) {this.usersList = usersList;}public String getMusicGenre() {
+    public void setUsersList(List<User> usersList) {this.usersList = usersList;}
+
+    public String getMusicGenre() {
         return musicGenre;
     }
     public void setMusicGenre(String musicGenre) {
