@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Golfer Match</title>
+    <link rel="stylesheet" th:href="@{/css/matchviewer.css}">
+</head>
+<body>
+<div class="match-container">
+    <h1>Would You Like to Match?</h1>
+
+    <div>
+        <img th:src="@{${golfer.profilePicture}}" alt="Golfer Image" width="200" height="200"><br><br>
+
+        <p><strong>First Name:</strong> <span th:text="${golfer.firstName}"></span></p>
+        <p><strong>Last Name:</strong> <span th:text="${golfer.lastName}"></span></p>
+        <p><strong>Username:</strong> <span th:text="${golfer.userName}"></span></p>
+        <p><strong>Description:</strong> <span th:text="${golfer.profileDescription}"></span></p>
+
+        <hr>
+
+        <h3>Preferences</h3>
+        <p><strong>Handicap:</strong> <span th:text="${golfer.handicap}"></span></p>
+        <p><strong>Music Preference:</strong> <span th:text="${golfer.musicPreference}"></span></p>
+        <p><strong>Alcohol Preference:</strong> <span th:text="${golfer.alcoholPreference}"></span></p>
+        <p><strong>Play Intensity:</strong> <span th:text="${golfer.playIntensity}"></span></p>
+    </div>
+
+    <div class="match-buttons">
+        <form th:action="@{'/match/like/' + ${golfer.id}}" method="post">
+            <button type="submit" class="like-btn">&#10003;</button>
+        </form>
+
+        <form th:action="@{'/match/dislike/' + ${golfer.id}}" method="post">
+            <button type="submit" class="dislike-btn">&#10005;</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

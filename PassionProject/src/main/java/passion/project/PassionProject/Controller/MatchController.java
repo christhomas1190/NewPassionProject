@@ -1,5 +1,6 @@
 package passion.project.PassionProject.Controller;
 
+import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import passion.project.PassionProject.Entity.Matches;
@@ -54,7 +55,14 @@ public class MatchController {
     public void deleteMatch(@PathVariable long id) {
         matchesRepository.deleteById(id);
     }
+    @GetMapping("/match/view/{id}")
+    public String viewGolferById(@PathVariable Long id, Model model) {
+        User golfer = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Golfer not found"));
 
+        model.addAttribute("golfer", golfer);
+        return "match-view";
+    }
     @PostMapping("/match/like/{id}")
     public String likeUser(@PathVariable Long id, @RequestParam Long userId) {
         User currentUser = userRepository.findById(userId)
