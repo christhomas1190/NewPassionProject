@@ -25,11 +25,20 @@ private Long id;
     @Column(name="COURSEPLAYED")
     private String coursePlayed;
 
+    @ManyToOne
+    private User user1;
+
+    @ManyToOne
+    private User user2;
+
     @JsonIgnore
     @ManyToMany(mappedBy = "matchHistory")
     private List<User> players;
 
-
+    public Matches(User user1, User user2) {
+        this.user1 = user1;
+        this.user2 = user2;
+    }
     public Matches(String month, String day, String year, String matchDate, String datePlayed, String coursePlayed) {
         this.month = month;
         this.day = day;

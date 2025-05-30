@@ -3,13 +3,19 @@ package passion.project.PassionProject.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import passion.project.PassionProject.Entity.Matches;
+import passion.project.PassionProject.Entity.User;
 import passion.project.PassionProject.Repos.MatchesRepository;
+import passion.project.PassionProject.Repos.UserRepository;
+import passion.project.PassionProject.UserNotFoundException;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/matches")
 public class MatchController {
 
     public MatchesRepository matchesRepository;
+    public UserRepository userRepository;
 
     @Autowired
     public  MatchController(MatchesRepository matchesRepository){
@@ -47,5 +53,15 @@ public class MatchController {
     @DeleteMapping("/{id}")
     public void deleteMatch(@PathVariable long id) {
         matchesRepository.deleteById(id);
+    }
+
+    @PostMapping("/match/like/{id}")
+    public String likeUser(@PathVariable Long id, @RequestParam Long userId) {
+        User currentUser = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        User likedUser = userRepository.findById(id).orElseThrow();
+
+        matchesRepository.save(new Matches(currentUser, likedUser));
+        return "redirect:/golfer-list";
     }
 }
