@@ -19,8 +19,9 @@ public class MatchController {
     public UserRepository userRepository;
 
     @Autowired
-    public  MatchController(MatchesRepository matchesRepository){
-        this.matchesRepository=matchesRepository;
+    public MatchController(MatchesRepository matchesRepository, UserRepository userRepository) {
+        this.matchesRepository = matchesRepository;
+        this.userRepository = userRepository;
     }
     @GetMapping
     public Iterable<Matches> getAllMatches(){
@@ -51,6 +52,7 @@ public class MatchController {
             return matchesRepository.save(matches);
         }).orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
     }
+
     @DeleteMapping("/{id}")
     public void deleteMatch(@PathVariable long id) {
         matchesRepository.deleteById(id);
@@ -64,10 +66,10 @@ public class MatchController {
         return "match-view";
     }
     @PostMapping("/match/like/{id}")
-    public String likeUser(@PathVariable Long id, @RequestParam Long userId) {
-        User currentUser = userRepository.findById(userId)
+    public String likeUser(@PathVariable Long id, Principal principal) {
+        String username = principal.getName();
+        User currentUser = userRepository.getUserName(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
-        User likedUser = userRepository.findById(id).orElseThrow();
 
         matchesRepository.save(new Matches(currentUser, likedUser));
         return "redirect:/golfer-list";

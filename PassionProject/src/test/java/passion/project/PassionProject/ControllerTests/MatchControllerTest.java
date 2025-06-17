@@ -4,29 +4,32 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import passion.project.PassionProject.Controller.MatchController;
 import passion.project.PassionProject.Entity.Matches;
+import passion.project.PassionProject.Entity.User;
 import passion.project.PassionProject.Repos.MatchesRepository;
+import passion.project.PassionProject.Repos.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class MatchControllerTest {
-    private MatchesRepository mockRepo;
+    private MatchesRepository mockMatchesRepo;
+    private UserRepository mockUserRepo;
     private MatchController controller;
 
     @BeforeEach
     public void setUp() {
-        mockRepo = mock(MatchesRepository.class);
-        controller = new MatchController(mockRepo);
+        mockMatchesRepo = mock(MatchesRepository.class);
+        mockUserRepo = mock(UserRepository.class);
+        controller = new MatchController(mockMatchesRepo, mockUserRepo);
     }
 
     @Test
     public void testGetAllMatches() {
         List<Matches> matchesList = List.of(new Matches("04", "23", "2025", "04/23/2025", "04/23/2025", "Pebble Beach"));
-        when(mockRepo.findAll()).thenReturn(matchesList);
+        when(mockMatchesRepo.findAll()).thenReturn(matchesList);
 
         Iterable<Matches> result = controller.getAllMatches();
         assertEquals(matchesList, result);
@@ -35,7 +38,7 @@ public class MatchControllerTest {
     @Test
     public void testGetMatchById_MatchExists() {
         Matches match = new Matches("04", "23", "2025", "04/23/2025", "04/23/2025", "Augusta National");
-        when(mockRepo.findById(1L)).thenReturn(Optional.of(match));
+        when(mockMatchesRepo.findById(1L)).thenReturn(Optional.of(match));
 
         Matches result = controller.getUserById(1L);
         assertEquals(match, result);
@@ -43,7 +46,7 @@ public class MatchControllerTest {
 
     @Test
     public void testGetMatchById_NotFound() {
-        when(mockRepo.findById(1L)).thenReturn(Optional.empty());
+        when(mockMatchesRepo.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> controller.getUserById(1L));
     }
@@ -53,8 +56,8 @@ public class MatchControllerTest {
         Matches existing = new Matches("04", "23", "2025", "04/23/2025", "04/23/2025", "Pebble Beach");
         Matches updated = new Matches("05", "01", "2025", "05/01/2025", "05/01/2025", "St. Andrews");
 
-        when(mockRepo.findById(1L)).thenReturn(Optional.of(existing));
-        when(mockRepo.save(any(Matches.class))).thenReturn(existing);
+        when(mockMatchesRepo.findById(1L)).thenReturn(Optional.of(existing));
+        when(mockMatchesRepo.save(any(Matches.class))).thenReturn(existing);
 
         Matches result = controller.updateMatches(1L, updated);
 
@@ -65,7 +68,7 @@ public class MatchControllerTest {
     @Test
     public void testUpdateMatch_NotFound() {
         Matches updated = new Matches("05", "01", "2025", "05/01/2025", "05/01/2025", "St. Andrews");
-        when(mockRepo.findById(1L)).thenReturn(Optional.empty());
+        when(mockMatchesRepo.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> controller.updateMatches(1L, updated));
     }
@@ -73,6 +76,25 @@ public class MatchControllerTest {
     @Test
     public void testDeleteMatch() {
         controller.deleteMatch(1L);
-        verify(mockRepo, times(1)).deleteById(1L);
+        verify(mockMatchesRepo, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void testLikeUser_SavesMatch() {
+        User currentUser = new User();
+        currentUser.setId(100L);
+        currentUser.setUserName("chris");
+
+        User likedUser = new User();
+        likedUser.setId(200L);
+        likedUser.setUserName("alex");
+
+        when(mockUserRepo.findById(100L)).thenReturn(Optional.of(currentUser));
+        when(mockUserRepo.findById(200L)).thenReturn(Optional.of(likedUser));
+
+        String result = controller.likeUser(200L, 100L);
+
+        verify(mockMatchesRepo, times(1)).save(any(Matches.class));
+        assertEquals("redirect:/golfer-list", result);
     }
 }
