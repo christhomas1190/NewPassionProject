@@ -1,5 +1,6 @@
 package passion.project.PassionProject.Controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import passion.project.PassionProject.UserNotFoundException;
 
 import java.security.Principal;
 
-@RestController
+@Controller
 @RequestMapping("/matches")
 public class MatchController {
 
@@ -57,19 +58,24 @@ public class MatchController {
     public void deleteMatch(@PathVariable long id) {
         matchesRepository.deleteById(id);
     }
+
     @GetMapping("/match/view/{id}")
     public String viewGolferById(@PathVariable Long id, Model model) {
         User golfer = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Golfer not found"));
 
         model.addAttribute("golfer", golfer);
-        return "match-view";
+        return "matchviewer";
     }
     @PostMapping("/match/like/{id}")
     public String likeUser(@PathVariable Long id, Principal principal) {
         String username = principal.getName();
-        User currentUser = userRepository.getUserName(username)
+
+        User currentUser = (User) userRepository.findByUserName(username)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        User likedUser = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Liked user not found"));
 
         matchesRepository.save(new Matches(currentUser, likedUser));
         return "redirect:/golfer-list";

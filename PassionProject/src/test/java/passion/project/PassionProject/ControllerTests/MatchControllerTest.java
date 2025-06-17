@@ -8,6 +8,7 @@ import passion.project.PassionProject.Entity.User;
 import passion.project.PassionProject.Repos.MatchesRepository;
 import passion.project.PassionProject.Repos.UserRepository;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,7 +81,7 @@ public class MatchControllerTest {
     }
 
     @Test
-    public void testLikeUser_SavesMatch() {
+    public void testLikeUser_SavesMatch_WithPrincipal() {
         User currentUser = new User();
         currentUser.setId(100L);
         currentUser.setUserName("chris");
@@ -89,12 +90,19 @@ public class MatchControllerTest {
         likedUser.setId(200L);
         likedUser.setUserName("alex");
 
-        when(mockUserRepo.findById(100L)).thenReturn(Optional.of(currentUser));
+        // mock the principal to simulate authentication
+        Principal mockPrincipal = mock(Principal.class);
+        when(mockPrincipal.getName()).thenReturn("chris");
+
+        // mock the repo responses
+        when(mockUserRepo.findByUserName("chris")).thenReturn(Optional.of(currentUser));
         when(mockUserRepo.findById(200L)).thenReturn(Optional.of(likedUser));
 
-        String result = controller.likeUser(200L, 100L);
+        // act
+        String result = controller.likeUser(200L, mockPrincipal);
 
-        verify(mockMatchesRepo, times(1)).save(any(Matches.class));
+        // verify the save happened
+        verify(mockMatchesRepo).save(any(Matches.class));
         assertEquals("redirect:/golfer-list", result);
     }
 }
