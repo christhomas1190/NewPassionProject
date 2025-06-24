@@ -67,6 +67,11 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "connected_user_id")
     )
+//    @OneToMany(mappedBy = "sender")
+//    private List<Message> sentMessages;
+//
+//    @OneToMany(mappedBy = "recipient")
+//    private List<Message> receivedMessages;
     private List<User> usersList = new ArrayList<>();
     //list of matches
     @ManyToMany(cascade = CascadeType.ALL)
