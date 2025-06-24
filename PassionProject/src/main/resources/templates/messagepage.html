@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Messages</title>
+    <link rel="stylesheet" th:href="@{/css/koley.css}">
+</head>
+<body>
+
+<h2>Messages with <span th:text="${chatPartner.userName}">User</span></h2>
+
+<!-- Show chat history -->
+<div class="chat-box">
+    <div th:each="message : ${messages}">
+        <div th:if="${message.sender.id == currentUser.id}">
+            <p><strong>You:</strong> <span th:text="${message.content}"></span></p>
+        </div>
+        <div th:if="${message.sender.id != currentUser.id}">
+            <p><strong th:text="${message.sender.userName}">Partner</strong>: <span th:text="${message.content}"></span></p>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- Send a new message -->
+<form th:action="@{/messages/send}" method="post">
+    <input type="hidden" name="senderId" th:value="${currentUser.id}" />
+    <input type="hidden" name="recipientId" th:value="${chatPartner.id}" />
+
+    <label for="content">Your Message:</label><br>
+    <textarea id="content" name="content" rows="4" cols="50" required></textarea><br><br>
+
+    <button type="submit">Send</button>
+</form>
+
+</body>
+</html>
